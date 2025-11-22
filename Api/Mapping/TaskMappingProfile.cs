@@ -15,7 +15,7 @@ public class TaskMappingProfile : Profile
 
         // DTO -> Domain
         CreateMap<TaskCreateDto, TaskItem>()
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<TaskStatus>(src.Status!, true)))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => Enum.Parse<Domain.TaskStatus>(src.Status!, true)))
             .ForMember(dest => dest.Priority, opt => opt.MapFrom(src => Enum.Parse<Domain.TaskPriority>(src.Priority!, true)));
     }
 }

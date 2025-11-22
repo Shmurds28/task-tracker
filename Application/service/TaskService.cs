@@ -43,8 +43,8 @@ public class TaskService : ITaskService
         {
             var qLower = q.Trim();
             query = query.Where(t =>
-                (t.Title ?? string.Empty).Contains(qLower, StringComparison.OrdinalIgnoreCase) ||
-                (t.Description ?? string.Empty).Contains(qLower, StringComparison.OrdinalIgnoreCase)
+                (t.Title ?? string.Empty).Contains(qLower, StringComparison.Ordinal) ||
+                (t.Description ?? string.Empty).Contains(qLower, StringComparison.Ordinal)
             );
         }
 
