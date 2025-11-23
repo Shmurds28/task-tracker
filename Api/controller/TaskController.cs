@@ -36,7 +36,6 @@ public class TasksController : ControllerBase
         if (task == null)
             return NotFound(new ProblemDetails
             {
-                Type = "https://example.com/probs/not-found",
                 Title = "Task not found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = $"Task with id {id} was not found."
@@ -53,7 +52,6 @@ public class TasksController : ControllerBase
         {
             var details = new ValidationProblemDetails(errors)
             {
-                Type = "https://example.com/probs/validation",
                 Title = "Validation failed",
                 Status = StatusCodes.Status400BadRequest
             };
@@ -73,7 +71,6 @@ public class TasksController : ControllerBase
         {
             var details = new ValidationProblemDetails(errors)
             {
-                Type = "https://example.com/probs/validation",
                 Title = "Validation failed",
                 Status = StatusCodes.Status400BadRequest
             };
@@ -86,7 +83,6 @@ public class TasksController : ControllerBase
         {
             return NotFound(new ProblemDetails
             {
-                Type = "https://example.com/probs/not-found",
                 Title = "Task not found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = $"Task with id {id} was not found."
@@ -104,7 +100,6 @@ public class TasksController : ControllerBase
         {
             return NotFound(new ProblemDetails
             {
-                Type = "https://example.com/probs/not-found",
                 Title = "Task not found",
                 Status = StatusCodes.Status404NotFound,
                 Detail = $"Task with id {id} was not found."

@@ -45,17 +45,27 @@ export class TaskListComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.service.deleteTask(id).subscribe(() => {
-          Swal.fire({
-            toast: true,
-            position: 'bottom',
-            showConfirmButton: false,
-            timer: 5000,
-            timerProgressBar: true,
-            icon: 'success',
-            title: "Task successfully deleted"
-          });
-          this.load()
+        this.service.deleteTask(id).subscribe({
+          next: () => {
+            Swal.fire({
+              toast: true,
+              position: 'bottom',
+              showConfirmButton: false,
+              timer: 5000,
+              timerProgressBar: true,
+              icon: 'success',
+              title: 'Task successfully deleted'
+            });
+            this.load();
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: err.message,
+              timer: 5000,
+              timerProgressBar: true,
+            });
+          }
         });
       }
     });

@@ -49,34 +49,47 @@ export class TaskFormComponent implements OnInit  {
     const payload = this.form.value as TaskCreateDto;
 
     if (this.taskId) {
-      this.taskService.updateTask(this.taskId, payload).subscribe(() => {
-        Swal.fire({
-          toast: true,
-          position: 'bottom',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-          icon: 'success',
-          title: "Task successfully updated"
-        });
-        
-        this.router.navigate(['/tasks']);
+      this.taskService.updateTask(this.taskId, payload).subscribe({
+        next: () => {
+          Swal.fire({
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            icon: 'success',
+            title: 'Task successfully updated'
+          });
+          this.router.navigate(['/tasks']);
+        },
+        error: this.handleError
       });
     } else {
-      this.taskService.createTask(payload).subscribe(() => {
-        Swal.fire({
-          toast: true,
-          position: 'bottom',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-          icon: 'success',
-          title: "Task successfully created"
-        });
-
-        this.router.navigate(['/tasks']);
+      this.taskService.createTask(payload).subscribe({
+        next: () => {
+          Swal.fire({
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            icon: 'success',
+            title: 'Task successfully created'
+          });
+          this.router.navigate(['/tasks']);
+        },
+        error: this.handleError
       });
     }
   }
+
+  handleError = (err: any) => {
+    Swal.fire({
+      icon: 'error',
+      title: err.message,
+      timer: 5000,
+      timerProgressBar: true,
+    });
+  };
 
 }
