@@ -9,7 +9,7 @@ import { TaskCreateDto } from 'src/app/shared/models/task-create-dto';
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = environment.apiBaseUrl + '/api/task';
+  private baseUrl = environment.apiBaseUrl + '/api/tasks';
 
   constructor(private http: HttpClient) { }
 

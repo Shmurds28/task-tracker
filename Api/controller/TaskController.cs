@@ -9,12 +9,12 @@ namespace Api.controller;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TaskController : ControllerBase
+public class TasksController : ControllerBase
 {
     private readonly ITaskService _service;
     private readonly IMapper _mapper;
 
-    public TaskController(ITaskService service, IMapper mapper)
+    public TasksController(ITaskService service, IMapper mapper)
     {
         _service = service;
         _mapper = mapper;

@@ -1,5 +1,12 @@
-<div class="form-dialog">
-  <h2 mat-dialog-title>{{ data?.id ? 'Edit Task' : 'Create Task' }}</h2>
+<div class="component-container">
+  <div class="header mt-3">
+    <mat-toolbar color="primary">
+      <span>Task Tracker</span>
+    </mat-toolbar>
+  </div>
+
+  <div class="form-dialog">
+  <h2 mat-dialog-title>{{ taskId ? 'Edit Task' : 'Create Task' }}</h2>
 
 <form [formGroup]="form" class="form">
   <mat-form-field appearance="outline">
@@ -36,11 +43,13 @@
   </mat-form-field>
 
   <div class="actions">
-    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [routerLink]="['/tasks']">Cancel</button>
     <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">
       Save
     </button>
   </div>
 </form>
+
+</div>
 
 </div>

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from 'src/app/core/services/task.service';
 import { Task } from 'src/app/shared/models/task';
 import { TaskCreateDto } from 'src/app/shared/models/task-create-dto';
@@ -12,6 +13,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./task-form.component.scss']
 })
 export class TaskFormComponent implements OnInit  {
+    task: Task | undefined;
+    taskId: number | undefined;
+
    form = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -22,17 +26,21 @@ export class TaskFormComponent implements OnInit  {
 
   constructor(
     private fb: FormBuilder,
-    private service: TaskService,
-    private dialogRef: MatDialogRef<TaskFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private taskService: TaskService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    if (this.data?.id) {
-      this.service.getTask(this.data.id).subscribe(task => {
-        this.form.patchValue(task);
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      this.taskId = id ? Number(id) : undefined;
+      if(this.taskId) {
+        this.taskService.getTask(this.taskId).subscribe(task => {
+          this.form.patchValue(task);
+        });
+      }
+    });
   }
 
   submit() {
@@ -40,8 +48,8 @@ export class TaskFormComponent implements OnInit  {
 
     const payload = this.form.value as TaskCreateDto;
 
-    if (this.data?.id) {
-      this.service.updateTask(this.data.id, payload).subscribe(() => {
+    if (this.taskId) {
+      this.taskService.updateTask(this.taskId, payload).subscribe(() => {
         Swal.fire({
           toast: true,
           position: 'bottom',
@@ -51,10 +59,11 @@ export class TaskFormComponent implements OnInit  {
           icon: 'success',
           title: "Task successfully updated"
         });
-        this.dialogRef.close(true);
+        
+        this.router.navigate(['/tasks']);
       });
     } else {
-      this.service.createTask(payload).subscribe(() => {
+      this.taskService.createTask(payload).subscribe(() => {
         Swal.fire({
           toast: true,
           position: 'bottom',
@@ -64,7 +73,8 @@ export class TaskFormComponent implements OnInit  {
           icon: 'success',
           title: "Task successfully created"
         });
-        this.dialogRef.close(true);
+
+        this.router.navigate(['/tasks']);
       });
     }
   }

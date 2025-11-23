@@ -4,6 +4,7 @@ import { TaskService } from 'src/app/core/services/task.service';
 import { Task } from 'src/app/shared/models/task';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
@@ -18,7 +19,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private service: TaskService,
-    private dialog: MatDialog
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -32,14 +33,7 @@ export class TaskListComponent implements OnInit {
   }
 
   openForm(id?: number) {
-    const dialogRef = this.dialog.open(TaskFormComponent, {
-      width: '450px',
-      data: { id }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.load();
-    });
+    this.router.navigate(['/tasks', id, 'edit']);
   }
 
   delete(id: number) {
