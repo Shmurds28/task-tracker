@@ -22,7 +22,7 @@ This app follows a **clean architecture** approach to separate concerns and impr
 ## Features
 
 - Create, update, delete, and view tasks  
-- Task prioritization and due dates  
+- Task searching and sorting
 - User-friendly interface with Angular Material  
 - RESTful API built with .NET 8  
 - Clean architecture separating layers for better maintainability  
@@ -61,9 +61,33 @@ The frontend Angular app communicates with the backend API via HTTP and is struc
 
 ---
 
-### Running the Backend
+### Running the Application Locally
 
-1. Clone the repository:  
+#### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/task-tracker.git
+
+# Navigate to the backend project folder
 cd task-tracker/Api
+
+# Restore dependencies
+dotnet restore
+
+# Run the backend API
+dotnet run
+
+## Running the Frontend
+# Navigate to the frontend project folder
+cd task-tracker-frontend
+
+# Install dependencies
+npm install
+
+# Start the Angular development server
+ng serve
+
+# The frontend will be available at:
+# http://localhost:4200
+
+
